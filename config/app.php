@@ -123,6 +123,11 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'store_feeder_url' => env('STORE_FEEDER_URL'),
+    'store_feeder_username' => env('STORE_FEEDER_USERNAME'),
+    'store_feeder_password' => env('STORE_FEEDER_PASSWORD'),
+    'store_feeder_client_id' => env('STORE_FEEDER_CLIENT_ID'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
