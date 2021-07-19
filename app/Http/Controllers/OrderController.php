@@ -11,8 +11,13 @@ class OrderController extends Controller
     use StoreFeeder;
     public function search(Request $request){
         $request -> validate([
-            'id' => 'required|int'
+            'id' => 'required'
         ]);
+        if (isset($request->channel)){
+            $response = $this -> getOrderDetailByChannelOrderId($request->id);
+            if ( $response['status'] != 200 ) abort(404,$response['data']['Message']);
+            return view('order.details',['order' => $response['data'][0] ]);
+        }
         $order = Orders::find($request -> id);
         if (isset($order)) return view('order.details',[ 'order' => $order -> body ]);
         $response = $this -> getOrderDetailById($request -> id);

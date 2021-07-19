@@ -3,16 +3,16 @@
 <h1>{{ $order['OrderNumber'] }}</h1>
 <div class="flex flex-wrap">
     <div class="card m-4">
-    <div class="card-header text-center ">
-        Order Information
-    </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item"><b>Order Number :</b> {{ $order['OrderNumber'] ?? 'N/A' }}</li>
-        <li class="list-group-item"><b>Company Identity : </b> {{$order['CompanyIdentity']['CompanyIdentityName'] ?? 'N/A'}}</li>
-        <li class="list-group-item"> <b>Channel Purchased From : </b>{{$order['Channel']['ChannelName'] ?? 'N/A'}}</li>
-        <li class="list-group-item"><b>Channel Order Number : </b>{{ $order ['ChannelOrderRef'] }} </li>
-        <li class="list-group-item"><b>Order Status : </b>  {{$order['OrderStatus']}} </li>
-    </ul>
+        <div class="card-header text-center ">
+            Order Information
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><b>Order Number :</b> {{ $order['OrderNumber'] ?? 'N/A' }}</li>
+            <li class="list-group-item"><b>Company Identity : </b> {{$order['CompanyIdentity']['CompanyIdentityName'] ?? 'N/A'}}</li>
+            <li class="list-group-item"> <b>Channel Purchased From : </b>{{$order['Channel']['ChannelName'] ?? 'N/A'}}</li>
+            <li class="list-group-item"><b>Channel Order Number : </b>{{ $order ['ChannelOrderRef'] }} </li>
+            <li class="list-group-item"><b>Order Status : </b>  {{$order['OrderStatus']}} </li>
+        </ul>
     </div>
     <div class="card m-4" >
         <div class="card-header">
@@ -23,13 +23,13 @@
             <li class="list-group-item"><b>Imported from Channel on : </b> {{$order['ImportDate'] ?? 'N/A'}}</li>
             <li class="list-group-item"> <b>Assigned to Picker on : </b>-</li>
             <li class="list-group-item"><b>Pickwave ID : </b>- </li>
-            <li class="list-group-item"><b>Despatched on : </b>  {{$order['DespatchDate']}} </li>
-            <li class="list-group-item"><b>Despatch sent to Channel : </b>  {{$order['DespatchSentToChannelDate']}} </li>
+            <li class="list-group-item"><b>Despatched on : </b>  {{$order['DespatchDate'] ?? 'N/A'}} </li>
+            <li class="list-group-item"><b>Despatch sent to Channel : </b>  {{$order['DespatchSentToChannelDate'] ?? 'N/A'}} </li>
             <li class="list-group-item"><b>Updated as shipped on Channel : </b>  - </li>
             <li class="list-group-item"><b>Designated Picker : </b>  - </li>
             <li class="list-group-item"><b>Designated Packer : </b>  - </li>
             <li class="list-group-item"><b>Signed for by : </b>  - </li>
-            <li class="list-group-item"><b>Payment ID : </b>  {{$order['PaymentID']}} </li>
+            <li class="list-group-item"><b>Payment ID : </b>  {{$order['PaymentID'] ?? 'N/A'}} </li>
             <li class="list-group-item"><b>Delivered on : </b>  - </li>
             <li class="list-group-item"><b>Manifested on : </b>  - </li>
         </ul>
@@ -96,16 +96,6 @@
                 </table>
             </li>
             
-        </ul>
-    </div>
-    <div class="card m-4">
-        <div class="card-header">
-            Shipping & Handling
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Vestibulum at eros</li>
         </ul>
     </div>
 </div>

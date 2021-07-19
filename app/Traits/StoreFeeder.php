@@ -74,4 +74,37 @@ trait StoreFeeder {
         );
     }
 
+    public function getOrderDetailByChannelOrderId($id){
+        $token = $this ->getBearerToken();
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => config('app.store_feeder_url').'orders?ChannelOrderRef='.$id,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            'Authorization: Bearer '.$token,
+        ),
+        ));
+
+        $res = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        $response = json_decode($res,true);
+        // dump($httpcode);
+        // dd($response);
+        // dump($httpcode);
+        // dd($response);
+        if ($httpcode == 200 && $response['TotalItems'] > 0){
+            // $this -> saveOrder($response);
+            return ['status' => $httpcode , 'message' => 'Success!' , 'data' => $response['Data'] ];
+        }else {
+            return ['status' => $httpcode , 'message' => 'ERROR!!' , 'data' => $response ];
+        }
+    }
 }
