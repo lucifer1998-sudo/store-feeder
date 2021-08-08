@@ -131,5 +131,29 @@
     </tbody>
     </table>
 </div>
+<div class="">
+    <h2>Logs :</h2>
+    @foreach ($logs as $log)
+    <div class="row">
+        <p><b>{{isset($log -> user) ? $log -> user -> name : 'DELETED USER'}} :</b> {{$log -> body}}</p><br>
+    </div>        
+    @endforeach
+</div>
+<div class="flex ">
+    <form method="POST" action="{{route('logs.store')}}" class="w-full">
+    @csrf
+    <input type="hidden" name="order_id" value="{{$order['OrderNumber']}}">
+    <div class="form-group">
+        <!-- <label for="">Logs</label> -->
+        <textarea name="body" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter a Log..." required></textarea>
+    </div>
+    <div class="form-group">
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary mb-2">Save</button>
+        </div>
+    </div>
+    </form>
+    
+</div>
 
 @endsection

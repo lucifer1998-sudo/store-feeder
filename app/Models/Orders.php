@@ -15,4 +15,7 @@ class Orders extends Model
     public function getBodyAttribute(){
         return json_decode($this->data,true);
     }
+    public function logs(){
+        return $this -> hasMany(Logs::class,'order_id');
+    }
 }
