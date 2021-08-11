@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('body')
-<h1>{{ $order['OrderNumber'] }}</h1>
+<h1>Order ID: {{ $order['OrderNumber'] }}</h1>
 <div class="flex flex-wrap">
     <div class="card m-4">
         <div class="card-header text-center ">
@@ -95,7 +95,7 @@
                     </tbody>
                 </table>
             </li>
-            
+
         </ul>
     </div>
 </div>
@@ -127,7 +127,7 @@
             </tr>
             @endforeach
         @endif
-        
+
     </tbody>
     </table>
 </div>
@@ -136,7 +136,7 @@
     @foreach ($logs as $log)
     <div class="row">
         <p><b>{{isset($log -> user) ? $log -> user -> name : 'DELETED USER'}} :</b> {{$log -> body}}</p><br>
-    </div>        
+    </div>
     @endforeach
 </div>
 <div class="flex ">
@@ -153,7 +153,7 @@
         </div>
     </div>
     </form>
-    
+
 </div>
 
 @endsection
