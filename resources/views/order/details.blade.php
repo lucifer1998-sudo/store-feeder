@@ -53,8 +53,8 @@
                 <li class="list-group-item">
                     <table class="table table-borderless">
                         <thead>
-                        <tr>
-                            <th scope="col"></th>
+                        <tr class="text-center">
+                            <th scope="col">Details</th>
                             <th scope="col">Billing Address</th>
                             <th scope="col">Shipping Address</th>
                         </tr>
