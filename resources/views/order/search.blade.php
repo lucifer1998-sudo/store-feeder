@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('body')
-    <h5 class="pb-4 text-center">Find Orders by StoreFeeder Order Id Or Channel Order Id</h5>
+    <h5 class="pb-4 mt-5 text-center">Find Orders by StoreFeeder Order Id Or Channel Order Id</h5>
 
     <form action="{{route('search-order')}}" method="POST" class="form">
         @csrf

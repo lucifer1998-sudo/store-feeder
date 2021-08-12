@@ -1,57 +1,65 @@
 @extends('layouts.app')
 @section('body')
 <h1>Order ID: {{ $order['OrderNumber'] }}</h1>
-<div class="flex flex-wrap">
-    <div class="card m-4">
-        <div class="card-header text-center ">
-            Order Information
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header text-center ">
+                Order Information
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Order Number :</b> {{ $order['OrderNumber'] ?? 'N/A' }}</li>
+                <li class="list-group-item"><b>Company Identity : </b> {{$order['CompanyIdentity']['CompanyIdentityName'] ?? 'N/A'}}</li>
+                <li class="list-group-item"> <b>Channel Purchased From : </b>{{$order['Channel']['ChannelName'] ?? 'N/A'}}</li>
+                <li class="list-group-item"><b>Channel Order Number : </b>{{ $order ['ChannelOrderRef'] }} </li>
+                <li class="list-group-item"><b>Order Status : </b>  {{$order['OrderStatus']}} </li>
+            </ul>
         </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item"><b>Order Number :</b> {{ $order['OrderNumber'] ?? 'N/A' }}</li>
-            <li class="list-group-item"><b>Company Identity : </b> {{$order['CompanyIdentity']['CompanyIdentityName'] ?? 'N/A'}}</li>
-            <li class="list-group-item"> <b>Channel Purchased From : </b>{{$order['Channel']['ChannelName'] ?? 'N/A'}}</li>
-            <li class="list-group-item"><b>Channel Order Number : </b>{{ $order ['ChannelOrderRef'] }} </li>
-            <li class="list-group-item"><b>Order Status : </b>  {{$order['OrderStatus']}} </li>
-        </ul>
     </div>
-    <div class="card m-4" >
-        <div class="card-header">
-            Order Process Details
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Order Process Details
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Order Date :</b> {{ $order['OrderDate'] ?? 'N/A' }}</li>
+                <li class="list-group-item"><b>Imported from Channel on : </b> {{$order['ImportDate'] ?? 'N/A'}}</li>
+                <li class="list-group-item"> <b>Assigned to Picker on : </b>-</li>
+                <li class="list-group-item"><b>Pickwave ID : </b>- </li>
+                <li class="list-group-item"><b>Despatched on : </b>  {{$order['DespatchDate'] ?? 'N/A'}} </li>
+                <li class="list-group-item"><b>Despatch sent to Channel : </b>  {{$order['DespatchSentToChannelDate'] ?? 'N/A'}} </li>
+                <li class="list-group-item"><b>Updated as shipped on Channel : </b>  - </li>
+                <li class="list-group-item"><b>Designated Picker : </b>  - </li>
+                <li class="list-group-item"><b>Designated Packer : </b>  - </li>
+                <li class="list-group-item"><b>Signed for by : </b>  - </li>
+                <li class="list-group-item"><b>Payment ID : </b>  {{$order['PaymentID'] ?? 'N/A'}} </li>
+                <li class="list-group-item"><b>Delivered on : </b>  - </li>
+                <li class="list-group-item"><b>Manifested on : </b>  - </li>
+            </ul>
         </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item"><b>Order Date :</b> {{ $order['OrderDate'] ?? 'N/A' }}</li>
-            <li class="list-group-item"><b>Imported from Channel on : </b> {{$order['ImportDate'] ?? 'N/A'}}</li>
-            <li class="list-group-item"> <b>Assigned to Picker on : </b>-</li>
-            <li class="list-group-item"><b>Pickwave ID : </b>- </li>
-            <li class="list-group-item"><b>Despatched on : </b>  {{$order['DespatchDate'] ?? 'N/A'}} </li>
-            <li class="list-group-item"><b>Despatch sent to Channel : </b>  {{$order['DespatchSentToChannelDate'] ?? 'N/A'}} </li>
-            <li class="list-group-item"><b>Updated as shipped on Channel : </b>  - </li>
-            <li class="list-group-item"><b>Designated Picker : </b>  - </li>
-            <li class="list-group-item"><b>Designated Packer : </b>  - </li>
-            <li class="list-group-item"><b>Signed for by : </b>  - </li>
-            <li class="list-group-item"><b>Payment ID : </b>  {{$order['PaymentID'] ?? 'N/A'}} </li>
-            <li class="list-group-item"><b>Delivered on : </b>  - </li>
-            <li class="list-group-item"><b>Manifested on : </b>  - </li>
-        </ul>
     </div>
-    <div class="card m-4" >
-        <div class="card-header">
-            Customer
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item"><b>Customer :</b> {{ $order['Customer']['FirstName'] .' '. $order['Customer']['LastName'] ?? 'N/A' }}</li>
-            <li class="list-group-item"><b>Phone : </b> {{$order['Shippingaddress']['PhoneNumber'] ?? 'N/A'}}</li>
-            <li class="list-group-item"> <b>Email : </b>{{$order['Customer']['Email'] ?? 'N/A'}}</li>
-            <li class="list-group-item">
-                <table class="table table-borderless">
-                    <thead>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card my-4" >
+            <div class="card-header">
+                Customer
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Customer :</b> {{ $order['Customer']['FirstName'] .' '. $order['Customer']['LastName'] ?? 'N/A' }}</li>
+                <li class="list-group-item"><b>Phone : </b> {{$order['Shippingaddress']['PhoneNumber'] ?? 'N/A'}}</li>
+                <li class="list-group-item"> <b>Email : </b>{{$order['Customer']['Email'] ?? 'N/A'}}</li>
+                <li class="list-group-item">
+                    <table class="table table-borderless">
+                        <thead>
                         <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Billing Address</th>
-                        <th scope="col">Shipping Address</th>
+                            <th scope="col"></th>
+                            <th scope="col">Billing Address</th>
+                            <th scope="col">Shipping Address</th>
                         </tr>
-                    </thead>
-                    <tbody class="text-center">
+                        </thead>
+                        <tbody class="text-center">
                         <tr>
                             <th scope="row">Name</th>
                             <td>{{$order['BillingAddress']['FirstName'] .' '. $order['BillingAddress']['LastName']  ?? 'N/A'}}</td>
@@ -92,16 +100,18 @@
                             <td>{{$order['BillingAddress']['Country']  ?? 'N/A'}}</td>
                             <td>{{$order['Shippingaddress']['Country']  ?? 'N/A'}}</td>
                         </tr>
-                    </tbody>
-                </table>
-            </li>
+                        </tbody>
+                    </table>
+                </li>
 
-        </ul>
+            </ul>
+        </div>
     </div>
 </div>
-<h6 class="font-3xl">Items Ordered</h6>
+
+<h3 class="font-3xl text-primary">Items Ordered</h3>
 <div class="flex flex-wrap">
-    <table class="table table-borderless">
+    <table class="table table-bordered">
     <thead>
         <tr>
         <th scope="col">Product ID</th>
@@ -131,11 +141,13 @@
     </tbody>
     </table>
 </div>
-<div class="">
+<div>
     <h2>Logs :</h2>
     @foreach ($logs as $log)
     <div class="row">
-        <p><b>{{isset($log -> user) ? $log -> user -> name : 'DELETED USER'}} :</b> {{$log -> body}}</p><br>
+        <div class="card m-3 p-3 w-100">
+            <p><b>{{isset($log -> user) ? $log -> user -> name : 'DELETED USER'}} :</b> {{$log -> body}}</p><br>
+        </div>
     </div>
     @endforeach
 </div>
