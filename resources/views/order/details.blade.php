@@ -1,6 +1,35 @@
 @extends('layouts.app')
 @section('body')
 <h1>Order ID: {{ $order['OrderNumber'] }}</h1>
+<div>
+    <h2>Logs :</h2>
+    <div class="row">
+        <div class="card mx-3 my-2 p-3 w-100 overflow-auto h-50">
+        @foreach ($logs as $log)
+            <div class="d-flex flex-row justify-content-between">
+                <p><b>{{isset($log -> user) ? $log -> user -> name : 'DELETED USER'}} :</b> {{$log -> body}}</p>
+                <span>Time: 4PM 16-08-2021</span>
+            </div>
+        @endforeach
+        </div>
+    </div>
+</div>
+<div class="flex ">
+    <form method="POST" action="{{route('logs.store')}}" class="w-full">
+        @csrf
+        <input type="hidden" name="order_id" value="{{$order['OrderNumber']}}">
+        <div class="form-group">
+            <!-- <label for="">Logs</label> -->
+            <textarea name="body" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter a Log..." required></textarea>
+        </div>
+        <div class="form-group">
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary mb-2">Save</button>
+            </div>
+        </div>
+    </form>
+
+</div>
 <div class="row mt-4">
     <div class="col-md-6">
         <div class="card h-100">
@@ -114,13 +143,13 @@
     <table class="table table-bordered">
     <thead>
         <tr>
-        <th scope="col">Product ID</th>
-        <th scope="col">SKU</th>
-        <th scope="col">Product Name</th>
-        <th scope="col">Qty Sent</th>
-        <th scope="col">Qty Returned</th>
-        <th scope="col">Total Amount</th>
-        <th scope="col">Status</th>
+            <th scope="col">Product ID</th>
+            <th scope="col">SKU</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Qty Sent</th>
+            <th scope="col">Qty Returned</th>
+            <th scope="col">Total Amount</th>
+            <th scope="col">Status</th>
         </tr>
     </thead>
     <tbody>
@@ -140,32 +169,6 @@
 
     </tbody>
     </table>
-</div>
-<div>
-    <h2>Logs :</h2>
-    @foreach ($logs as $log)
-    <div class="row">
-        <div class="card m-3 p-3 w-100">
-            <p><b>{{isset($log -> user) ? $log -> user -> name : 'DELETED USER'}} :</b> {{$log -> body}}</p><br>
-        </div>
-    </div>
-    @endforeach
-</div>
-<div class="flex ">
-    <form method="POST" action="{{route('logs.store')}}" class="w-full">
-    @csrf
-    <input type="hidden" name="order_id" value="{{$order['OrderNumber']}}">
-    <div class="form-group">
-        <!-- <label for="">Logs</label> -->
-        <textarea name="body" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter a Log..." required></textarea>
-    </div>
-    <div class="form-group">
-        <div class="text-right">
-            <button type="submit" class="btn btn-primary mb-2">Save</button>
-        </div>
-    </div>
-    </form>
-
 </div>
 
 @endsection
