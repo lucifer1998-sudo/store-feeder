@@ -154,6 +154,13 @@
 <div class="flex ">
     <form method="POST" action="{{route('logs.store')}}" class="w-full">
     @csrf
+    <div class="form-group">
+        <select class="js-example-basic-multiple form-control" name="users[]" multiple="multiple" placeholder = "Notify to">
+            @foreach ($users as $user)
+                <option value="{{$user -> id}}">{{$user -> name}}</option>
+            @endforeach
+        </select>
+    </div>
     <input type="hidden" name="order_id" value="{{$order['OrderNumber']}}">
     <div class="form-group">
         <!-- <label for="">Logs</label> -->

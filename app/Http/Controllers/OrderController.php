@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Orders;
+use App\Models\User;
 use App\Traits\StoreFeeder;
 use Illuminate\Http\Request;
 
@@ -23,7 +24,9 @@ class OrderController extends Controller
         else $order_logs = [];
         // if (isset($order)) return view('order.details',[ 'order' => $order -> body ]);
         $response = $this -> getOrderDetailById($request -> id);
+        $users = User::select('id','name')-> where('id','!=',auth()->id())->get();
+        // dd($response);
         if ( $response['status'] != 200 ) abort(404,$response['data']['Message']);
-        return view('order.details',['order' => $response['data'] , 'logs' => $order_logs ]);
+        return view('order.details',['order' => $response['data'] , 'logs' => $order_logs , 'users' => $users ]);
     }
 }

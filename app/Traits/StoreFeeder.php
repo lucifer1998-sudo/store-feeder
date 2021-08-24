@@ -10,14 +10,14 @@ use App\Models\Orders;
 trait StoreFeeder {
 
     public function getBearerToken(){
-        // try{
+        try{
             if (strtotime(Carbon::now()) < session('token_expiry')){
                 return session('store_feeder_token');
             }
             $curl = curl_init();
-            // if ($curl === false) {
-            //     throw new Exception('failed to initialize');
-            // }
+            if ($curl === false) {
+                throw new Exception('failed to initialize');
+            }
             curl_setopt_array($curl, array(
             CURLOPT_URL => config('app.store_feeder_url') . 'Token',
             CURLOPT_RETURNTRANSFER => true,
@@ -29,19 +29,20 @@ trait StoreFeeder {
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => 'grant_type=password&username='.config('app.store_feeder_username').'&password='.config('app.store_feeder_password').'&client_id='.config('app.store_feeder_client_id'),
             ));
-    
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
             $res = curl_exec($curl);
-            // if ($res === false) {
-            //     throw new Exception(curl_error($curl), curl_errno($curl));
-            // }
+            if ($res === false) {
+                throw new Exception(curl_error($curl), curl_errno($curl));
+            }
             curl_close($curl);
             $response = json_decode($res,true);
             session(['store_feeder_token'=>$response['access_token']]);
             session(['token_expiry' =>  strtotime($response['.expires'])]);
             return $response['access_token'];
-        // } catch(Exception $e){
-            // dd($e);
-        // }
+        } catch(Exception $e){
+            dd($e);
+        }
     }
 
     public function getOrderDetailById($id){
@@ -61,7 +62,8 @@ trait StoreFeeder {
             'Authorization: Bearer '.$token,
         ),
         ));
-
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
         $res = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);

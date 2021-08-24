@@ -46,7 +46,8 @@ class LogsController extends Controller
         ]);
         $message = 'Order # '.$request -> order_id.' has a new log.';
         $link = 'search-order?id='.$request -> order_id;
-        Notification ::send(User::all() , new OrderLogNotification(['link' => $link, 'message' => $message]));
+        $users = User::whereIn('id',$request -> users) -> get();
+        Notification ::send($users , new OrderLogNotification(['link' => $link, 'message' => $message]));
         return redirect('search-order?id='.$request -> order_id);
     }
 
