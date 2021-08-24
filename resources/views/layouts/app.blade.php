@@ -31,9 +31,9 @@
                                 </button>
 
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Notifications</a>
-                                    <a class="dropdown-item" href="#">Notifications</a>
-                                    <a class="dropdown-item" href="#">Notifications</a>
+                                    @foreach (auth()->user()->unreadNotifications as $notification)
+                                        <a class="dropdown-item" href="#">{{$notification -> data['message']}}</a>
+                                    @endforeach
                                 </div>
                             </div>
                             <form method="POST" action="{{ route('logout') }}">
