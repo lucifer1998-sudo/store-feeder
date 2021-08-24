@@ -7,6 +7,7 @@
     <div class="col-md-6 form-group">
         <form action="{{route('assign.order',[ 'order_id' => $order['OrderNumber'] ])}}" method="POST">
             @csrf
+            <label for="assign_to">Assigned To : </label>
             <select name="assign_to" id="assign_to" class="form-control">
                 <option value="0">Assign To</option>
                 @foreach ($users as $user)
@@ -17,6 +18,42 @@
         </form>
         
     </div>
+</div>
+<div>
+    <h2>Logs :</h2>
+    <div class="row">
+        <div class="card mx-3 my-2 p-3 w-100 overflow-auto h-50">
+        @foreach ($logs as $log)
+            <div class="d-flex flex-row justify-content-between">
+                <p><b>{{isset($log -> user) ? $log -> user -> name : 'DELETED USER'}} :</b> {{$log -> body}}</p>
+                <span>{{$log -> created_at}}</span>
+            </div>
+        @endforeach
+        </div>
+    </div>
+</div>
+<div class="flex ">
+    <form method="POST" action="{{route('logs.store')}}" class="w-full">
+        @csrf
+        <div class="form-group">
+        <select class="js-example-basic-multiple form-control" name="users[]" multiple="multiple" placeholder = "Notify to">
+            @foreach ($users as $user)
+                <option value="{{$user -> id}}">{{$user -> name}}</option>
+            @endforeach
+        </select>
+        </div>
+        <input type="hidden" name="order_id" value="{{$order['OrderNumber']}}">
+        <div class="form-group">
+            <!-- <label for="">Logs</label> -->
+            <textarea name="body" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter a Log..." required></textarea>
+        </div>
+        <div class="form-group">
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary mb-2">Save</button>
+            </div>
+        </div>
+    </form>
+
 </div>
 <div class="row mt-4">
     <div class="col-md-6">
@@ -131,13 +168,13 @@
     <table class="table table-bordered">
     <thead>
         <tr>
-        <th scope="col">Product ID</th>
-        <th scope="col">SKU</th>
-        <th scope="col">Product Name</th>
-        <th scope="col">Qty Sent</th>
-        <th scope="col">Qty Returned</th>
-        <th scope="col">Total Amount</th>
-        <th scope="col">Status</th>
+            <th scope="col">Product ID</th>
+            <th scope="col">SKU</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Qty Sent</th>
+            <th scope="col">Qty Returned</th>
+            <th scope="col">Total Amount</th>
+            <th scope="col">Status</th>
         </tr>
     </thead>
     <tbody>
@@ -167,29 +204,6 @@
         </div>
     </div>
     @endforeach
-</div>
-<div class="flex ">
-    <form method="POST" action="{{route('logs.store')}}" class="w-full">
-    @csrf
-    <div class="form-group">
-        <select class="js-example-basic-multiple form-control" name="users[]" multiple="multiple" placeholder = "Notify to">
-            @foreach ($users as $user)
-                <option value="{{$user -> id}}">{{$user -> name}}</option>
-            @endforeach
-        </select>
-    </div>
-    <input type="hidden" name="order_id" value="{{$order['OrderNumber']}}">
-    <div class="form-group">
-        <!-- <label for="">Logs</label> -->
-        <textarea name="body" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter a Log..." required></textarea>
-    </div>
-    <div class="form-group">
-        <div class="text-right">
-            <button type="submit" class="btn btn-primary mb-2">Save</button>
-        </div>
-    </div>
-    </form>
-
 </div>
 @endsection
 @section('extra_js')

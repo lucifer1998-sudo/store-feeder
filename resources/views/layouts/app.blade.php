@@ -20,7 +20,7 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
-    <div class="relative flex items-top justify-content-left min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+    <div class="relative container flex items-top justify-content-left min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
             @if (Route::has('login'))
                 <div class="navbar navbar-expand-lg navbar-light fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
