@@ -1,6 +1,23 @@
 @extends('layouts.app')
 @section('body')
-<h1>Order ID: {{ $order['OrderNumber'] }}</h1>
+<div class="row mt-4">
+    <div class="col-md-6">
+        <h1>Order ID: {{ $order['OrderNumber'] }}</h1>
+    </div>
+    <div class="col-md-6 form-group">
+        <form action="{{route('assign.order',[ 'order_id' => $order['OrderNumber'] ])}}" method="POST">
+            @csrf
+            <select name="assign_to" id="assign_to" class="form-control">
+                <option value="0">Assign To</option>
+                @foreach ($users as $user)
+                    <option value="{{$user -> id}}" @if($assigned_to == $user -> id ) selected  @endif  >
+                        {{$user -> name}}</option>
+                @endforeach
+            </select>
+        </form>
+        
+    </div>
+</div>
 <div class="row mt-4">
     <div class="col-md-6">
         <div class="card h-100">
@@ -174,5 +191,11 @@
     </form>
 
 </div>
-
+@endsection
+@section('extra_js')
+    <script>
+        $('#assign_to').change(function(){
+            $(this).closest('form').submit();
+        })
+    </script>
 @endsection

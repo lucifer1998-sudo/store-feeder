@@ -21,6 +21,7 @@ Route::middleware(['auth'])->group(function () {
 
     ## ORDER ROUTES ##
     Route::any('search-order',[OrderController::class,'search'])->name('search-order');
+    Route::post('/order/{order_id}/assign',[OrderController::class,'assignOrder']) -> name ('assign.order');
     Route::resource('logs', LogsController::class);
 });
 
