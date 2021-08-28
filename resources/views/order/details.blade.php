@@ -1,13 +1,13 @@
 @extends('layouts.app')
 @section('body')
-<div class="row mt-4">
-    <div class="col-md-6">
+<div class="row mt-4 h-100">
+    <div class="col-md-6 my-auto">
         <h1>Order ID: {{ $order['OrderNumber'] }}</h1>
     </div>
-    <div class="col-md-6 form-group">
+    <div class="col-md-6 form-group ">
         <form action="{{route('assign.order',[ 'order_id' => $order['OrderNumber'] ])}}" method="POST">
             @csrf
-            <label for="assign_to">Assigned To : </label>
+            <label for="assign_to" style="font-size: 12px;">Assigned To : </label>
             <select name="assign_to" id="assign_to" class="form-control">
                 <option value="0">Assign To</option>
                 @foreach ($users as $user)
@@ -16,9 +16,9 @@
                 @endforeach
             </select>
         </form>
-        
     </div>
 </div>
+<hr>
 <div>
     <h2>Logs :</h2>
     <div class="row">
