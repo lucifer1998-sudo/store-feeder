@@ -24,9 +24,16 @@
     <div class="row">
         <div class="card mx-3 my-2 p-3 w-100 overflow-auto h-50">
         @foreach ($logs as $log)
-            <div class="d-flex flex-row justify-content-between">
-                <p><b>{{isset($log -> user) ? $log -> user -> name : 'DELETED USER'}} :</b> {{$log -> body}}</p>
-                <span>{{$log -> created_at}}</span>
+            <div class="flex ">
+                <div class="d-flex flex-row justify-content-between">
+                    <p><b>{{isset($log -> user) ? $log -> user -> name : 'DELETED USER'}} :</b> {{$log -> body}}</p>
+                    <span>{{$log -> created_at}}</span>
+                </div>
+                @if(isset($log -> attachment))
+                    <div class="flex text-center">
+                        <img height="250" weight="250" src="{{$log -> attachment}}" alt="No image found">                  
+                    </div>
+                @endif
             </div>
         @endforeach
         </div>
