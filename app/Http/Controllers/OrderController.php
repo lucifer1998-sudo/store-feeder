@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Logs;
+use App\Models\User;
 use App\Models\Order;
 use App\Models\Orders;
-use App\Models\User;
 use App\Traits\StoreFeeder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -34,6 +36,13 @@ class OrderController extends Controller
     public function assignOrder(Request $request , $order_id){
         $order = Order ::find($order_id);
         $order -> update([ 'assigned_to' => $request -> assign_to , 'status' => $request -> status]);
+        if (isset($request -> assign_to) && $request -> assign_to > 0){
+            Logs::create([
+                'order_id' => $request -> order_id,
+                'body'  => 'Assigned to '. User::find($request -> assign_to)->name . ' with status '. $request -> status,
+                'created_by' => Auth::id(),
+            ]);
+        }
         return redirect('search-order?id='.$order_id);
     }
 }
