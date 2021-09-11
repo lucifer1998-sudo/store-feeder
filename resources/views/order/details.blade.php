@@ -5,17 +5,36 @@
         <h1>Order ID: {{ $order['OrderNumber'] }}</h1>
     </div>
     <div class="col-md-6 form-group ">
-        <form action="{{route('assign.order',[ 'order_id' => $order['OrderNumber'] ])}}" method="POST">
-            @csrf
-            <label for="assign_to" style="font-size: 12px;">Assigned To : </label>
-            <select name="assign_to" id="assign_to" class="form-control">
-                <option value="0">Assign To</option>
-                @foreach ($users as $user)
-                    <option value="{{$user -> id}}" @if($assigned_to == $user -> id ) selected  @endif  >
-                        {{$user -> name}}</option>
-                @endforeach
-            </select>
+        <div class="row">
+            <div class="col-md-5">
+                <form action="{{route('assign.order',[ 'order_id' => $order['OrderNumber'] ])}}" method="POST">
+                @csrf
+                <label for="assign_to" style="font-size: 12px;">Assigned To : </label>
+                <select name="assign_to" id="assign_to" class="form-control">
+                    <option value="0">Assign To</option>
+                    @foreach ($users as $user)
+                        <option value="{{$user -> id}}" @if($assigned_to == $user -> id ) selected  @endif  >
+                            {{$user -> name}}</option>
+                    @endforeach
+                </select>
+            </div> 
+            <div class="col-md-5">
+                <label for="assign_to" style="font-size: 12px;">Status </label>
+                <select name="status" id="assign_to" class="form-control">
+                        <option value="referred"  >
+                            Referred
+                        </option>
+                        <option value="closed" @if($status == 'closed') selected @endif) >
+                            Closed
+                        </option>
+                </select>
+            </div> 
+            <div class="col-md-2">
+                <button type="submit" class="form-control btn btn-primary" style="margin-top:28px">Save</button>
+            </div> 
         </form>
+        </div>
+        
     </div>
 </div>
 <hr>
@@ -208,8 +227,8 @@
 @endsection
 @section('extra_js')
     <script>
-        $('#assign_to').change(function(){
-            $(this).closest('form').submit();
-        })
+        // $('#assign_to').change(function(){
+        //     $(this).closest('form').submit();
+        // })
     </script>
 @endsection

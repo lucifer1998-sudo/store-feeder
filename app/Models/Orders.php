@@ -16,6 +16,6 @@ class Orders extends Model
         return json_decode($this->data,true);
     }
     public function logs(){
-        return $this -> hasMany(Logs::class,'order_id');
+        return $this -> hasMany(Logs::class,'order_id') -> orderBy('id','desc');
     }
 }
