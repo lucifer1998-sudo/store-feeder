@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Logs;
 use App\Models\User;
-use App\Notifications\OrderLogNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\Console\Input\Input;
+use App\Notifications\OrderLogNotification;
 use Illuminate\Support\Facades\Notification;
 
 class LogsController extends Controller
@@ -39,15 +40,32 @@ class LogsController extends Controller
      */
     public function store(Request $request)
     {
+        $attachment = '';
+        if (isset($request -> file)){
+            $file = $request -> file;
+            $file_name = $file->getClientOriginalName();
+            // $file_size = round($file->getSize() / 1024);
+            // $file_ex = $file->getClientOriginalExtension();
+            // $file_mime = $file->getMimeType();
+    
+            // if (!in_array($file_ex, array('jpg', 'gif', 'png'))) return Redirect::to('/')->withErrors('Invalid image extension we just allow JPG, GIF, PNG');
+    
+            $newname = time().'-'.$file_name;
+            $file->move(base_path().'/public/uploads/', $newname);
+            $attachment = '/uploads/'.$newname;
+        }
         Logs::create([
             'order_id' => $request -> order_id,
             'body'  => $request -> body,
-            'created_by' => Auth::id()
+            'created_by' => Auth::id(),
+            'attachment' => $attachment
         ]);
         $message = 'Order # '.$request -> order_id.' has a new log.';
         $link = 'search-order?id='.$request -> order_id;
-        $users = User::whereIn('id',$request -> users) -> get();
-        Notification ::send($users , new OrderLogNotification(['link' => $link, 'message' => $message]));
+        if (isset($request -> users)){
+            $users = User::whereIn('id',$request -> users) -> get();
+            Notification ::send($users , new OrderLogNotification(['link' => $link, 'message' => $message]));
+        }
         return redirect('search-order?id='.$request -> order_id);
     }
 

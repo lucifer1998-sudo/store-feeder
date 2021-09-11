@@ -33,7 +33,7 @@
     </div>
 </div>
 <div class="flex ">
-    <form method="POST" action="{{route('logs.store')}}" class="w-full">
+    <form method="POST" action="{{route('logs.store')}}" class="w-full" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
         <select class="js-example-basic-multiple form-control" name="users[]" multiple="multiple" placeholder = "Notify to">
@@ -46,6 +46,9 @@
         <div class="form-group">
             <!-- <label for="">Logs</label> -->
             <textarea name="body" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter a Log..." required></textarea>
+        </div>
+        <div class="form-group">
+            <input type="file" name="file" id="file" class="form-control">
         </div>
         <div class="form-group">
             <div class="text-right">
