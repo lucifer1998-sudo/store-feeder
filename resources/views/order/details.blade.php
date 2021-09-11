@@ -195,16 +195,6 @@
     </tbody>
     </table>
 </div>
-<div>
-    <h2>Logs :</h2>
-    @foreach ($logs as $log)
-    <div class="row">
-        <div class="card m-3 p-3 w-100">
-            <p><b>{{isset($log -> user) ? $log -> user -> name : 'DELETED USER'}} :</b> {{$log -> body}}</p><br>
-        </div>
-    </div>
-    @endforeach
-</div>
 @endsection
 @section('extra_js')
     <script>
