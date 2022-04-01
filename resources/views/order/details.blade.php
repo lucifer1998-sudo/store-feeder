@@ -17,7 +17,7 @@
                             {{$user -> name}}</option>
                     @endforeach
                 </select>
-            </div> 
+            </div>
             <div class="col-md-5">
                 <label for="assign_to" style="font-size: 12px;">Status </label>
                 <select name="status" id="assign_to" class="form-control">
@@ -28,13 +28,13 @@
                             Closed
                         </option>
                 </select>
-            </div> 
+            </div>
             <div class="col-md-2">
                 <button type="submit" class="form-control btn btn-primary" style="margin-top:28px">Save</button>
-            </div> 
+            </div>
         </form>
         </div>
-        
+
     </div>
 </div>
 <hr>
@@ -50,7 +50,29 @@
                 </div>
                 @if(isset($log -> attachment))
                     <div class="flex text-center">
-                        <img height="250" weight="250" src="{{$log -> attachment}}" alt="No image found">                  
+                        @php
+                            $extension = pathinfo(storage_path($log->attachment), PATHINFO_EXTENSION);
+                            $videoExtensions=['webm','MP4','MKV','MOV','WMV','AVI'];
+                            $imgExtensions=['png','jpeg','gifs'];
+                            $docExtensions=['txt','pdf','docx','pptx','exe','zip'];
+                        @endphp
+                        @if(in_array($extension,$videoExtensions))
+
+                            <video width = "250" height="250" controls>
+                                <source src="{{$log -> attachment}}" type="video/{{$extension}}">
+                            </video>
+                        @elseif(in_array($extension,$imgExtensions))
+                            <img height="250" weight="250" src="{{$log -> attachment}}" alt="No image found">
+                        @elseif(in_array($extension,$docExtensions))
+                            <p>
+                                {{$log -> attachment}}
+                            </p>
+                        @endif
+                        <div>
+                            <a href="{{$log -> attachment}}" download rel="noopener noreferrer" target="_blank">
+                                Download
+                            </a>
+                        </div>
                     </div>
                 @endif
             </div>

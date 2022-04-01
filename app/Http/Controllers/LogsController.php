@@ -44,12 +44,13 @@ class LogsController extends Controller
         if (isset($request -> file)){
             $file = $request -> file;
             $file_name = $file->getClientOriginalName();
+//            dd($file->getClientOriginalExtension());
             // $file_size = round($file->getSize() / 1024);
             // $file_ex = $file->getClientOriginalExtension();
             // $file_mime = $file->getMimeType();
-    
+
             // if (!in_array($file_ex, array('jpg', 'gif', 'png'))) return Redirect::to('/')->withErrors('Invalid image extension we just allow JPG, GIF, PNG');
-    
+
             $newname = time().'-'.$file_name;
             $file->move(base_path().'/public/uploads/', $newname);
             $attachment = '/uploads/'.$newname;
