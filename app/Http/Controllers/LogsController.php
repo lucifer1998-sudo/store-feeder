@@ -40,6 +40,7 @@ class LogsController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
         $attachment = '';
         if (isset($request -> file)){
             $file = $request -> file;
@@ -58,9 +59,11 @@ class LogsController extends Controller
         Logs::create([
             'order_id' => $request -> order_id,
             'body'  => $request -> body,
+            'high_priority' => $request->high_priority == 'on' ? 1 : 0 ,
             'created_by' => Auth::id(),
             'attachment' => $attachment
         ]);
+
         $message = 'Order # '.$request -> order_id.' has a new log.';
         $link = 'search-order?id='.$request -> order_id;
         if (isset($request -> users)){

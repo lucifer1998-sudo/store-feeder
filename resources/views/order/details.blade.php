@@ -48,6 +48,29 @@
                     <p><b>{{isset($log -> user) ? $log -> user -> name : 'DELETED USER'}} :</b> {{$log -> body}}</p>
                     <span>{{$log -> created_at}}</span>
                 </div>
+                <div>
+                    <style>
+                        .customIcon{
+                            display: flex;
+                            justify-content: flex-start;
+                            align-items: center;
+                        }.customIcon .icon{
+                                                     width: 18px;
+                                                     display: flex;
+                                                     justify-content: center;
+                                                     align-items: center;
+                                                     margin-left: 6px;
+                                                 }
+                    </style>
+                    @if($log->high_priority == 1)
+                    <span class="customIcon">
+                        <b>Priority:</b>
+                        <div class="icon" title="High Priority">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM232 152C232 138.8 242.8 128 256 128s24 10.75 24 24v128c0 13.25-10.75 24-24 24S232 293.3 232 280V152zM256 400c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 385.9 273.4 400 256 400z"/></svg>
+                        </div>
+                    </span>
+                    @endif
+                </div>
                 @if(isset($log -> attachment))
                     <div class="flex text-center">
                         @php
@@ -65,7 +88,8 @@
                             <img height="250" weight="250" src="{{$log -> attachment}}" alt="No image found">
                         @elseif(in_array($extension,$docExtensions))
                             <p>
-                                {{$log -> attachment}}
+                                {{ explode('/uploads/',$log -> attachment)[1] }}
+{{--                                <iframe src="{{$log -> attachment}}">Document</iframe>--}}
                             </p>
                         @endif
                         <div>
@@ -94,6 +118,10 @@
         <div class="form-group">
             <!-- <label for="">Logs</label> -->
             <textarea name="body" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter a Log..." required></textarea>
+        </div>
+        <div class="form-group">
+            <input type="checkbox" id="high_priority" name="high_priority">
+            <label for="high_priority"><b>High Priority</b></label>
         </div>
         <div class="form-group">
             <input type="file" name="file" id="file" class="form-control">
