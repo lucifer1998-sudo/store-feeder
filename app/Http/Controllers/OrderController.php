@@ -31,7 +31,7 @@ class OrderController extends Controller
         $users = User::select('id','name')-> where('id','!=',auth()->id())->get();
         // dd($response);
         if ( $response['status'] != 200 ) abort(404,$response['data']['Message']);
-        return view('order.details',['order' => $response['data'] , 'logs' => $order_logs , 'users' => $users , 'assigned_to' => $order -> assigned_to ?? ''  , 'status' => $order -> status ]);
+        return view('order.details',['order' => $response['data'] , 'logs' => $order_logs , 'users' => $users , 'assigned_to' => $order -> assigned_to ?? ''  , 'status' => $order -> status ?? '' ]);
     }
 
     public function assignOrder(Request $request , $order_id){
