@@ -40,16 +40,18 @@ class LogsController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
         $attachment = '';
         if (isset($request -> file)){
             $file = $request -> file;
             $file_name = $file->getClientOriginalName();
+//            dd($file->getClientOriginalExtension());
             // $file_size = round($file->getSize() / 1024);
             // $file_ex = $file->getClientOriginalExtension();
             // $file_mime = $file->getMimeType();
-    
+
             // if (!in_array($file_ex, array('jpg', 'gif', 'png'))) return Redirect::to('/')->withErrors('Invalid image extension we just allow JPG, GIF, PNG');
-    
+
             $newname = time().'-'.$file_name;
             $file->move(base_path().'/public/uploads/', $newname);
             $attachment = '/uploads/'.$newname;
@@ -57,9 +59,11 @@ class LogsController extends Controller
         Logs::create([
             'order_id' => $request -> order_id,
             'body'  => $request -> body,
+            'high_priority' => $request->high_priority == 'on' ? 1 : 0 ,
             'created_by' => Auth::id(),
             'attachment' => $attachment
         ]);
+
         $message = 'Order # '.$request -> order_id.' has a new log.';
         $link = 'search-order?id='.$request -> order_id;
         if (isset($request -> users)){
