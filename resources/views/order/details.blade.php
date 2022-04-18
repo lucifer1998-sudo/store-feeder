@@ -42,11 +42,16 @@
     <h2>Logs :</h2>
     <div class="row">
         <div class="card mx-3 my-2 p-3 w-100 overflow-auto h-50">
-        @foreach ($logs as $log)
+        @forelse ($logs as $log)
             <div class="flex ">
                 <div class="d-flex flex-row justify-content-between">
                     <p><b>{{isset($log -> user) ? $log -> user -> name : 'DELETED USER'}} :</b> {{$log -> body}}</p>
-                    <span>{{$log -> created_at}}</span>
+                    <span>
+                    @if($log->high_priority == 1)
+                        <img src="/images/circle-xxl.png" style="height: 18px;margin-right: 5px;margin-bottom: 3px;"alt="">
+                    @endif
+                        {{$log -> created_at}}
+                    </span>
                 </div>
                 <div>
                     <style>
@@ -62,21 +67,13 @@
                                                      margin-left: 6px;
                                                  }
                     </style>
-                    @if($log->high_priority == 1)
-                    <span class="customIcon">
-                        <b>Priority:</b>
-                        <div class="icon" title="High Priority">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM232 152C232 138.8 242.8 128 256 128s24 10.75 24 24v128c0 13.25-10.75 24-24 24S232 293.3 232 280V152zM256 400c-17.36 0-31.44-14.08-31.44-31.44c0-17.36 14.07-31.44 31.44-31.44s31.44 14.08 31.44 31.44C287.4 385.9 273.4 400 256 400z"/></svg>
-                        </div>
-                    </span>
-                    @endif
                 </div>
                 @if(isset($log -> attachment))
                     <div class="flex text-center">
                         @php
                             $extension = pathinfo(storage_path($log->attachment), PATHINFO_EXTENSION);
                             $videoExtensions=['webm','MP4','MKV','MOV','WMV','AVI'];
-                            $imgExtensions=['png','jpeg','gifs'];
+                            $imgExtensions=['png','jpeg','gifs','jpg'];
                             $docExtensions=['txt','pdf','docx','pptx','exe','zip'];
                         @endphp
                         @if(in_array($extension,$videoExtensions))
@@ -86,10 +83,9 @@
                             </video>
                         @elseif(in_array($extension,$imgExtensions))
                             <img height="250" weight="250" src="{{$log -> attachment}}" alt="No image found">
-                        @elseif(in_array($extension,$docExtensions))
+                        @else
                             <p>
-                                {{ explode('/uploads/',$log -> attachment)[1] }}
-{{--                                <iframe src="{{$log -> attachment}}">Document</iframe>--}}
+                                <iframe allow="fullscreen" height="300px" src="{{$log -> attachment}}">Document</iframe>
                             </p>
                         @endif
                         <div>
@@ -100,7 +96,9 @@
                     </div>
                 @endif
             </div>
-        @endforeach
+        @empty
+            <span style="text-align: center;">No log found.</span>
+        @endforelse
         </div>
     </div>
 </div>
