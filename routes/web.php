@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LogsController;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,9 @@ Route::middleware(['auth'])->group(function () {
     Route::any('search-order',[OrderController::class,'search'])->name('search-order');
     Route::post('/order/{order_id}/assign',[OrderController::class,'assignOrder']) -> name ('assign.order');
     Route::resource('logs', LogsController::class);
+    Route::get('/greeting', function () {
+        Artisan::call('migrate');
+    });
 });
 
 
