@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
     use StoreFeeder;
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $request -> validate([
             'id' => 'required'
         ]);
