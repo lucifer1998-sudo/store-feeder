@@ -56,13 +56,14 @@ class LogsController extends Controller
             $file->move(base_path().'/public/uploads/', $newname);
             $attachment = '/uploads/'.$newname;
         }
-        Logs::create([
-            'order_id' => $request -> order_id,
-            'body'  => $request -> body,
-            'high_priority' => $request->high_priority == 'on' ? 1 : 0 ,
-            'created_by' => Auth::id(),
-            'attachment' => $attachment
-        ]);
+            Logs::create([
+                'order_id' => $request -> order_id,
+                'body'  => $request -> body,
+                'high_priority' => $request->high_priority == 'on' ? 1 : 0 ,
+                'created_by' => Auth::id(),
+                'attachment' => $attachment
+            ]);
+
 
         $message = 'Order # '.$request -> order_id.' has a new log.';
         $link = 'search-order?id='.$request -> order_id;

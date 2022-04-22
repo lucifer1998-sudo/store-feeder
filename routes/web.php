@@ -4,8 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LogsController;
-use App\Http\Controllers\UserRoleController;
+use App\Http\Controllers\DelayedReplyController;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,11 +27,18 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/order/{order_id}/assign',[OrderController::class,'assignOrder']) -> name ('assign.order');
     Route::resource('logs', LogsController::class);
 
-    ##Role & Permission Route ##
-//    Route::get('create-role',[UserRoleController::class,'createRole']);
 
+    Route::get('/admin-dashboard', function () {
+        return view('admin.dashboard');
+    });
 
 });
+//CronJbs  Route for Notifying Admin
+Route::get('/notification', function () {
+    Artisan::call('send:notification');
+});
+
+
 
 
 require __DIR__.'/auth.php';

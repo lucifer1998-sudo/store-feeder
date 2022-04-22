@@ -48,9 +48,7 @@ class RegisteredUserController extends Controller
         ]);
 
         $user->assignRole('user');
-//        $user->givepermissionTo('create-user');
-
-//        auth()->user()->assignRole('User');
+//        $user->givepermissionTo('access-dashboard');
         event(new Registered($user));
 
         Auth::login($user);
