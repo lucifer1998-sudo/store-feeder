@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\DelayedReply;
 use App\Models\Logs;
+use App\Models\Orders;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -41,19 +42,18 @@ class SendNotification extends Command
      */
     public function handle()
     {
-
         $currentTime = carbon::now();
-        $user = DB::table('logs')->where('id', DB::raw("(select max(`id`) from logs)"))->first();
+        $user = Logs::orderBy('id','desc')->first();
 
-        if( $currentTime->diffInHours($user->created_at) >= 24){
-            DelayedReply::Create([
-                'body' => $user->body,
-                'created_by' => $user->created_by,
-                'order_id' => $user->order_id
-            ]);
+        if($user->getOrderstatus ? ($user->getOrderstatus->status=='closed' ? 0 : 1) : 0 ){
+                if( $currentTime->diffInHours($user->created_at) >= 24 ){
+                    DelayedReply::Create([
+                        'body' => $user->body,
+                        'created_by' => $user->created_by,
+                        'order_id' => $user->order_id
+                    ]);
+                }
         }
-
-
 
     }
 }

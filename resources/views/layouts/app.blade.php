@@ -41,14 +41,20 @@
             margin-top: 10px !important;
             height: 40px !important;
         }
-
+        #reportButton{
+            padding: 4px 10px;
+        }
     </style>
     <body class="font-sans antialiased">
     <div class="relative container flex items-top justify-content-left min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
             @if (Route::has('login'))
                 <div class="navbar navbar-expand-lg navbar-light fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
+
                         <div class="d-flex flex-row align-items-center ml-auto">
+                            @role('admin')
+                            <a href="{{url('/admin-dashboard')}}" class="btn btn-info" id="reportButton">Reports</a>
+                            @endrole
                             <div class="dropdown">
                                 <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="mr-3 btn btn-link mt-2 text-dark">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">

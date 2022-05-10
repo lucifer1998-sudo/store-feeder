@@ -60,11 +60,8 @@
                         </button>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            @php
-                            $notifications = \App\Models\DelayedReply::all();
-                            @endphp
                             @foreach($notifications as $notification)
-                            <a class="dropdown-item" href="#">Order # {{$notification->order_id}} has a new Notification.</a>
+                            <a class="dropdown-item" href="{{url('/search-order?id='.$notification->order_id)}}">Order {{$notification->order_id}} has Query pending.</a>
                             @endforeach
                         </div>
                     </div>
