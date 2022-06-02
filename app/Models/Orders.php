@@ -18,5 +18,7 @@ class Orders extends Model
     public function logs(){
         return $this -> hasMany(Logs::class,'order_id') -> orderBy('id','desc');
     }
-
+    public function getComplain(){
+        return $this -> hasMany(Complain::class,'order_id');
+    }
 }

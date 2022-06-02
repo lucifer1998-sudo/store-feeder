@@ -16,4 +16,5 @@ class Logs extends Model
     public function getOrderstatus(){
         return $this->belongsTo(Orders::class,'order_id');
     }
+
 }

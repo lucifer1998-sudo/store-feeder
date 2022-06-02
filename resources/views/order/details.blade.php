@@ -132,8 +132,63 @@
             </div>
         </div>
     </form>
+</div>
+
+{{--Complain Box--}}
+
+<div class="flex">
+    <h3>Complain Box</h3>
+    <form method="POST" action="{{url('complain')}}" class="w-full" id="complain-box">
+        @csrf
+        <div class="form-group">
+            <select class="js-example-basic-multiple form-control"  id="users" name="against[]" multiple="multiple" placeholder = "Helooooo">
+                <option>Select</option>
+                @foreach ($users as $user)
+                    <option value="{{$user -> id}}">{{$user -> name}}</option>
+                @endforeach
+            </select>
+        </div>
+        <input type="hidden" id="order_id" name="order_id" value="{{$order['OrderNumber']}}">
+        <div class="form-group">
+            <!-- <label for="">Logs</label> -->
+            <textarea name="comment" id="comment" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter logs" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary mb-2">Save</button>
+            </div>
+        </div>
+    </form>
 
 </div>
+
+{{--return order--}}
+
+<div class="flex">
+    @role('users')
+    <button class="btn btn-info" type="submit" id="returnbox">Return Order</button>
+    @endrole
+    <div class="return" style="display: none" >
+        <h4>Return Order</h4>
+            <form method="POST" action="{{url('/returnOrder')}}" class="w-full" id="returnOrder">
+                @csrf
+                <input type="hidden" id="order_id" name="order_id" value="{{$order['OrderNumber']}}">
+                <input type="hidden" id="created_by" name="created-by" value="{{\Illuminate\Support\Facades\Auth::id()}}">
+                <div class="form-group">
+                    <!-- <label for="">Logs</label> -->
+                    <textarea name="body" id="body" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter the reason" required></textarea>
+                </div>
+                <div class="form-group">
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-primary mb-2">Save</button>
+                    </div>
+                </div>
+            </form>
+    </div>
+</div>
+
+
 <div class="row mt-4">
     <div class="col-md-6">
         <div class="card h-100">
@@ -280,5 +335,9 @@
         // $('#assign_to').change(function(){
         //     $(this).closest('form').submit();
         // })
+        $('#returnbox').click( function (){
+            $('.return').toggle();
+        });
     </script>
 @endsection
+
