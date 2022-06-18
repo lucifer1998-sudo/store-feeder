@@ -8,16 +8,23 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
+        <link rel="stylesheet" href= "{{asset('css/custom.css')}}" />
+
+
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <!-- Styles -->
-{{--        <link rel="stylesheet" href="{{ asset('css/app.css') }}">--}}
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href= "asset('css/app.css')" />
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
     </head>
     <style>
         .dropdown-menu{
@@ -34,14 +41,20 @@
             margin-top: 10px !important;
             height: 40px !important;
         }
-
+        #reportButton{
+            padding: 4px 10px;
+        }
     </style>
     <body class="font-sans antialiased">
     <div class="relative container flex items-top justify-content-left min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
             @if (Route::has('login'))
                 <div class="navbar navbar-expand-lg navbar-light fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
+
                         <div class="d-flex flex-row align-items-center ml-auto">
+                            @role('admin')
+                            <a href="{{url('/admin-dashboard')}}" class="btn btn-info" id="reportButton">Reports</a>
+                            @endrole
                             <div class="dropdown">
                                 <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="mr-3 btn btn-link mt-2 text-dark">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">

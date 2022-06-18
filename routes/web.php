@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LogsController;
+use App\Http\Controllers\DelayedReplyController;
+use App\Http\Controllers\ReportsController;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -27,7 +30,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/greeting', function () {
         Artisan::call('migrate');
     });
+
+
+    Route::get('/admin-dashboard',[ReportsController::class,'index']);
+
 });
+
+//CronJbs  Route for Notifying Admin
+Route::get('/notification', function () {
+    Artisan::call('send:notification');
+});
+
 
 
 

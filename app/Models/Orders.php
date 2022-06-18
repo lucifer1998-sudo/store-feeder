@@ -18,4 +18,5 @@ class Orders extends Model
     public function logs(){
         return $this -> hasMany(Logs::class,'order_id') -> orderBy('id','desc');
     }
+
 }

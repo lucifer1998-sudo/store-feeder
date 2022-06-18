@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
     use StoreFeeder;
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $request -> validate([
             'id' => 'required'
         ]);
@@ -41,7 +42,7 @@ class OrderController extends Controller
             Logs::create([
                 'order_id' => $request -> order_id,
                 'body'  => 'Assigned to '. User::find($request -> assign_to)->name . ' with status '. $request -> status,
-                'created_by' => Auth::id(),
+                'created_by' => Auth::id()
             ]);
         }
         return redirect('search-order?id='.$order_id);
