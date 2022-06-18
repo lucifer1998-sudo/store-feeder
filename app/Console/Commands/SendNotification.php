@@ -42,9 +42,13 @@ class SendNotification extends Command
      */
     public function handle()
     {
+        DelayedReply::create([
+            'body' => '21',
+            'created_by' => 1,
+            'order_id' => 1
+        ]);
         $currentTime = carbon::now();
         $user = Logs::orderBy('id','desc')->first();
-
         if($user->getOrderstatus ? ($user->getOrderstatus->status=='closed' ? 0 : 1) : 0 ){
                 if( $currentTime->diffInHours($user->created_at) >= 24 ){
                     DelayedReply::Create([
