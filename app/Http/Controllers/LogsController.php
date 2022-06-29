@@ -40,7 +40,7 @@ class LogsController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+//        dd($request->all());
         $attachment = '';
         if (isset($request -> file)){
             $file = $request -> file;
