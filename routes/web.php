@@ -6,6 +6,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LogsController;
 use App\Http\Controllers\DelayedReplyController;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\ComplainController;
+use App\Http\Controllers\ReturnOrderController;
+use \App\Http\Controllers\UserController;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Artisan;
 
@@ -31,17 +34,37 @@ Route::middleware(['auth'])->group(function () {
         Artisan::call('migrate');
     });
 
-
     Route::get('/admin-dashboard',[ReportsController::class,'index']);
+    Route::get('/dailyReports',[ReportsController::class,'dailyReports']);
+
+
+    Route::get('/progress-report',[ComplainController::class,'index']);
+    Route::post('complain',[ComplainController::class,'store']);
+
+
+
+    //userdashboard
+    Route::get('/user_dashboard',[UserController::class,'index']);
+
+
+    //For Generating Report
+    Route::get('/generateReport',[ComplainController::class,'generateReport']);
+
+    //For return/replace
+    Route::post('/returnOrder',[ReturnOrderController::class,'store']);
+    Route::get('/returnReplacement',[ReturnOrderController::class,'show']);
+    Route::get('/returnOrderReport',[ReturnOrderController::class,'returnOrderReport']);
 
 });
+
+
 
 //CronJbs  Route for Notifying Admin
 Route::get('/notification', function () {
     Artisan::call('send:notification');
 });
 
-
+Route::get('/test',[ReportsController::class,'test']);
 
 
 require __DIR__.'/auth.php';

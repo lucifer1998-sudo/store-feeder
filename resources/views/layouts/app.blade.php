@@ -8,6 +8,7 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
+
         <link rel="stylesheet" href= "{{asset('css/custom.css')}}" />
 
 
@@ -54,6 +55,9 @@
                         <div class="d-flex flex-row align-items-center ml-auto">
                             @role('admin')
                             <a href="{{url('/admin-dashboard')}}" class="btn btn-info" id="reportButton">Reports</a>
+                            @endrole
+                            @role('users')
+                            <a href="{{url('/user_dashboard')}}" class="btn btn-info" id="reportButton">DashBoard</a>
                             @endrole
                             <div class="dropdown">
                                 <button type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="mr-3 btn btn-link mt-2 text-dark">
